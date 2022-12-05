@@ -30,7 +30,7 @@ export const Buscador = () => {
 
       console.log(resultadoBusquedaCanciones);
     } else {
-      
+      alert("debes escribir el nombre de la cancion");
     }
   };
 
@@ -42,10 +42,16 @@ export const Buscador = () => {
           aria-label="Nombre de la cancion"
           aria-describedby="basic-addon2"
           ref={valorInputBusqueda}
-          onKeyUp={() => {
+        />
+        <Button
+          variant="outline-secondary"
+          id="button-addon2"
+          onClick={() => {
             searchSongs(valorInputBusqueda.current.value);
           }}
-        />
+        >
+          Buscar
+        </Button>
       </InputGroup>
 
       {resultadoBusquedaCanciones &&
