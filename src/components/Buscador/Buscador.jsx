@@ -1,11 +1,11 @@
-import React, { useRef, useState } from "react"; //Actualizar sin recargar pagina (Creo)
+import React, { useRef, useState } from "react"; 
 import { Card, Form, InputGroup, Col } from "react-bootstrap"; //Elementos de Boostrap
-import { Link } from "react-router-dom";
+
 //El componente buscador consume la api desde "https://api.lyrics.ovh"
 export const Buscador = () => {
   const [resultadoBusquedaCanciones, setResultadoBusquedaCanciones] =
     useState();
-  const [letraCancion, setLetraCancion] = useState();
+  
   //API
   const API_URL = "https://api.lyrics.ovh";
 

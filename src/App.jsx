@@ -27,7 +27,6 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Buscador />} />
-              {/* <Route path="/detalle-letra" element={<DetalleLetra />} />  */}
             </Routes>
           </BrowserRouter>
         </Row>
