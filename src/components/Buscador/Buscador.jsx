@@ -1,15 +1,16 @@
-import React, { useRef, useState } from "react"; 
+import React, { useRef, useState } from "react";
 import { Card, Form, InputGroup, Col } from "react-bootstrap"; //Elementos de Boostrap
+import Swal from "sweetalert2";
 
 //El componente buscador consume la api desde "https://api.lyrics.ovh"
 export const Buscador = () => {
   const [resultadoBusquedaCanciones, setResultadoBusquedaCanciones] =
     useState();
-  
+  const valorInputBusqueda = useRef();
+
   //API
   const API_URL = "https://api.lyrics.ovh";
 
-  const valorInputBusqueda = useRef();
   // usamos fetch para consumir la api
   const getLyrics = async (artist, songTilte) => {
     return new Promise(async (resolve, reject) => {
@@ -22,14 +23,22 @@ export const Buscador = () => {
       }
     });
   };
+
   // usamos fetch para traer las canciones
   const searchSongs = async (value) => {
-    const res = await fetch(`${API_URL}/suggest/${value}`);
-    const data = await res.json();
-    setResultadoBusquedaCanciones(data.data);
-
-    console.log(resultadoBusquedaCanciones);
+    if (value.trim() !== "") {
+      const res = await fetch(`${API_URL}/suggest/${value}`);
+      const data = await res.json();
+      setResultadoBusquedaCanciones(data.data);
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title: "Oops...",
+        text: "¡Debes escribir el nombre de la canción!",
+      });
+    }
   };
+  
   //Dibujamos el fomulario donde se escriba la canción que buscamos
   return (
     <>
@@ -49,18 +58,13 @@ export const Buscador = () => {
         resultadoBusquedaCanciones.map((item) => {
           return (
             //Mostramos en formato tarjeta las canciones: El título, autor, preview y el link hacia la cancion completa.
-            <Col sm={12}>
-              <Card
-                key={item.id}
-                className="shadow my-2"
-                bg="dark"
-                text="white"
-              >
+            <Col sm={12} key={item.id}>
+              <Card className="shadow my-2" bg="dark" text="white">
                 <Card.Header as={"h5"} style={{ height: "3.7rem" }}>
-                    {item.title} - {item.artist.name}
+                  {item.title} - {item.artist.name}
                 </Card.Header>
                 <Card.Body>
-                  <Card.Text className="blockquote mb-0 row">
+                  <div className="blockquote mb-0 row">
                     <img
                       src={item.album.cover}
                       alt={item.album.title}
@@ -74,7 +78,7 @@ export const Buscador = () => {
                         <source type="audio/wav" src={item.preview} />
                       </audio>
                     </div>
-                  </Card.Text>
+                  </div>
                 </Card.Body>
                 <Card.Footer className="col-12">
                   <Card.Link href={item.link} target="_blank" rel="noreferrer">
