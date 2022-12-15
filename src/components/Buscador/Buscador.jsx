@@ -23,7 +23,6 @@ export const Buscador = () => {
       }
     });
   };
-
   // usamos fetch para traer las canciones
   const searchSongs = async (value) => {
     if (value.trim() !== "") {
@@ -38,7 +37,6 @@ export const Buscador = () => {
       });
     }
   };
-  
   //Dibujamos el fomulario donde se escriba la canción que buscamos
   return (
     <>
